@@ -1,9 +1,9 @@
 // Object literal notation (most common way)
-let user = {
-  name: "John",
-  age: 30,
-  isAdmin: true,
-};
+// let user = {
+//   name: "John",
+//   age: 30,
+//   isAdmin: true,
+// };
 
 // Empty object
 let empty = {};
@@ -21,10 +21,10 @@ let person = {
 
 
 
-let user = {
-  name: "John",
-  age: 30,
-};
+// let user = {
+//   name: "John",
+//   age: 30,
+// };
 
 // Dot notation
 console.log(user.name); // John
