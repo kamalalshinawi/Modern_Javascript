@@ -21,3 +21,21 @@ nameInput.addEventListener('input', (event) => {
 
     console.log('User typed:', value1);
 });
+
+// customMenu
+
+const customMenu = document.getElementById('customMenu');
+
+document.addEventListener('contextmenu', (event) => {
+    event.preventDefault(); // Prevent default context menu
+
+    // Position and show our custom menu
+    customMenu.style.display = 'block';
+    customMenu.style.left = event.clientX + 'px';
+    customMenu.style.top = event.clientY + 'px';
+});
+
+// Hide menu when clicking elsewhere
+document.addEventListener('click', () => {
+    customMenu.style.display = 'none';
+});
