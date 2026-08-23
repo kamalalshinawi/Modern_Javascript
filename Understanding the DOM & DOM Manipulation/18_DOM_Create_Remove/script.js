@@ -39,3 +39,34 @@ if (button) {
 button.remove();
 let img = document.querySelector("img");
 container1.removeChild(img);
+
+
+// Create a new list
+let ul = document.createElement('ul');
+container2.appendChild(ul);
+
+// Function to add a new item
+function addListItem(text) {
+    let li = document.createElement('li');
+    li.textContent = text;
+
+    // Add a delete button
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = ' x ';
+    deleteButton.style.marginLeft = '10px';
+
+    /* When clicked, remove the list item. This is an event that we will cover in 
+    the next section!*/
+    
+    deleteButton.onclick = function() {
+        li.remove();
+    };
+
+    li.appendChild(deleteButton);
+    ul.appendChild(li);
+}
+
+// Add some items
+addListItem('First item');
+addListItem('Second item');
+addListItem('Third item');
