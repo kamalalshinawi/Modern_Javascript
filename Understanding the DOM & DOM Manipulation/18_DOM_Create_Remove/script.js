@@ -24,3 +24,14 @@ let newImage = document.createElement('img');
 newImage.src = 'https://placehold.co/150';
 newImage.alt = 'Placeholder image';
 container1.appendChild(newImage);
+
+
+
+let heading1 = document.createElement('h1');
+
+heading1.textContent = "this is alshinawi"; 
+
+let specificH2 = document.getElementsByTagName("h2")[0];
+
+
+container1.insertBefore(heading1,specificH2)
