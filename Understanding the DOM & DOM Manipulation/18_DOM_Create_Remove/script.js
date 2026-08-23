@@ -35,3 +35,10 @@ let specificH2 = document.getElementsByTagName("h2")[0];
 
 
 container1.insertBefore(heading1,specificH2)
+
+
+let button = container2.querySelector('button')
+
+if(button){
+    container1.appendChild(button)
+}
