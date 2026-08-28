@@ -1,97 +1,137 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Working with Events</title>
     <style>
-        .container {
-            border: 2px solid #333;
+    .form-container {
+            max-width: 500px;
+            margin: 20px auto;
             padding: 20px;
-            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .form-container {
-            background-color: #f5f5f5;
-            padding: 20px;
-            margin: 20px;
+        .form-group {
+            margin-bottom: 15px;
         }
-        .item {
-            padding: 10px;
-            margin: 5px;
-            background-color: #f0f0f0;
-            border: 1px solid #999;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
         }
-        .delete-btn {
-            float: right;
-            color: red;
-            cursor: pointer;
-            padding: 0 5px;
-        }
-        .custom-menu {
-            display: none;
-            position: absolute;
-            background: white;
-            border: 1px solid #999;
-            padding: 10px;
-        }
-        .modal {
-            padding: 20px;
-            background: white;
-            border: 1px solid #999;
-            margin: 20px;
-        }
-        .input-field {
-            margin: 10px 0;
-            padding: 5px;
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
         .error {
             color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
             display: none;
         }
+        .success {
+            color: green;
+            font-size: 0.8em;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .valid {
+            border-color: #4CAF50;
+        }
+        .invalid {
+            border-color: #f44336;
+        }
     </style>
-</head>
-<body>
-    <div class="container" id="mainContainer">
-        <h2>Interactive Elements</h2>
-        <div class="item">
-            Item 1 <span class="delete-btn">×</span>
-        </div>
-        <div class="item">
-            Item 2 <span class="delete-btn">×</span>
-        </div>
+  </head>
+  <body>
+    <!-- <div id="div1">
+      <button id="button">Click here</button>
     </div>
-    
-    <div class="form-container">
-        <form id="myForm">
-            <input type="text" id="nameInput"
-                   class="input-field"
-                   placeholder="Enter your name">
+    <div> -->
+      <!-- if you press on it wi'll navigate to the google website but take a look in script.js file  -->
+      <!-- <a href="https://google.com" id="link">google</a>
+    </div>
+    <div></div>
+    <div></div> -->
+
+
+    <!-- <form id="form">
+        <div>
+            <input type="text" value="name" id="name">
+            <h1 id="value">
+
+            </h1>
+            <h2 id="val2">
+
+            </h2>
+             
             <div class="error" id="nameError">
-                Name is required
+                Error in your name 
+            </div>
+        </div>
+        <div>
+            <button type="submit" id="submit">submit</button>
+        </div>
+
+    </form> -->
+
+
+<div class="form-container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <div class="error" id="usernameError"></div>
+                <div class="success" id="usernameSuccess">Username is available!</div>
             </div>
 
-            <input type="email" id="emailInput"
-                   class="input-field"
-                   placeholder="Enter your email">
-            <div class="error" id="emailError">
-                Valid email is required
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error" id="emailError"></div>
             </div>
 
-            <button type="submit">Submit</button>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error" id="passwordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="error" id="confirmPasswordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone">
+                <div class="error" id="phoneError"></div>
+            </div>
+
+            <button type="submit" id="submitButton">Register</button>
         </form>
     </div>
 
-    <div class="modal" id="simpleModal">
-        <h3>Modal Content</h3>
-        <p>Click anywhere inside this modal.</p>
-        <p>Events will not propagate to parent elements.</p>
-    </div>
 
-    <div class="custom-menu" id="customMenu">
-        <div>Custom Menu Item 1</div>
-        <div>Custom Menu Item 2</div>
-    </div>
+
+
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
