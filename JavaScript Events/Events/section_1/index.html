@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        margin: 20px;
+        background-color: midnightblue;
+        color: whitesmoke;
+        cursor: pointer;
+      }
+
+      .box {
+        width: 200px;
+        height: 200px;
+        border: 2px solid mistyrose;
+        border-radius: 5px;
+        background-color: aliceblue;
+        margin: 20px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+      .highlight {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Events</h1>
+    <div id="interactive-area">
+      <button id="click-button" class="button">Click Me!</button>
+      <button id="remove-button" class="button">Remove Listener</button>
+      <div id="hoverBox" class="box">mouse over me</div>
+      <input
+        type="text"
+        name="input"
+        id="inputField"
+        placeholder="type something"
+      />
+    </div>
+    <div id="displayArea"></div>
+    <div id="displayArea2"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
