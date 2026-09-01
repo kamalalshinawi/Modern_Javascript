@@ -28,3 +28,22 @@ async function getDataSafely() {
         console.error('Failed to get data:', error);
     }
 }
+
+
+
+async function getPostsWithParams() {
+    // Creating URL with parameters
+    const baseUrl = '<https://jsonplaceholder.typicode.com/posts>';
+    const params = new URLSearchParams({
+        userId: 1,
+        _limit: 5
+    });
+
+    try {
+        const response = await fetch(`${baseUrl}?${params}`);
+        const data = await response.json();
+        console.log('Posts:', data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
