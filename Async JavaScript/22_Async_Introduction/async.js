@@ -5,7 +5,7 @@ let testAsync = () => {
 };
 
 console.log("start the program");
-testAsync(); // will freeze here for 5 second
+console.log(testAsync()); // will freeze here for 5 second
 console.log(`end the program`);
 
 //  this is how setTimeout work in Async
@@ -17,7 +17,7 @@ let asyncFun = (data) => {
 
   setTimeout(() => {
     console.log(`this is Async code ? ${data} `);
-  }, 2000);
+  }, 10000);
 };
 asyncFun(`true`);
 console.log(`this Ending of Program`);
