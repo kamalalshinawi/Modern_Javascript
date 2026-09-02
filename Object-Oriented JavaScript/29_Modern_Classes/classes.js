@@ -4,6 +4,7 @@ class Calc {
     this.num2 = num2;
     this.result = 0;
   }
+  // These methods are automatically added to Calc.prototype
 
   add() {
     this.result = this.num1 + this.num2;
