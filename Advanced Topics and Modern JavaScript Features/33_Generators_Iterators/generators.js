@@ -11,3 +11,23 @@ for (const item of set) console.log(item);
 for (const [key, value] of map) console.log(key, value);
 console.log("--------------------------------------------------");
 console.log(map)
+
+
+
+
+function* numberGenerator() {
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+const gen = numberGenerator();
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+console.log(gen.next().value); // 3
+console.log(gen.next().value); // undefined
+
+// Or use it in a for...of loop
+for (const num of numberGenerator()) {
+    console.log(num); // 1, 2, 3
+}
