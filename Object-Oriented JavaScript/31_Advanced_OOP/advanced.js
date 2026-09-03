@@ -1,6 +1,3 @@
-//  getBalance - deposit - withdraw -logTransaction - getLogTransactionHistory
-// Balance => number - Transactions []
-
 class BankAccount {
   #balance = 0; // private field
   #tranSactions = []; // private field
@@ -21,11 +18,6 @@ class BankAccount {
     }
     this.#balance += amount;
     this.#logTransaction("deposit", amount);
-    // this.#tranSactions.push({
-    //   type: "deposit",
-    //   amount: amount,
-    //   date: new Date(),
-    // });
     return this.#balance;
   }
 
@@ -38,11 +30,6 @@ class BankAccount {
 
     this.#balance -= amount;
     this.#logTransaction("withdraw", amount);
-    // this.#tranSactions.push({
-    //     type: "withdraw",
-    //     amount: amount,
-    //     date: new Date(),
-    //   });
     return this.#balance;
   }
 
