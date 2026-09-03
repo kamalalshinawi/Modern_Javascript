@@ -31,3 +31,19 @@ console.log(gen.next().value); // undefined
 for (const num of numberGenerator()) {
     console.log(num); // 1, 2, 3
 }
+
+
+
+
+function* demo() {
+    console.log('Start');
+    const a = yield 1;
+    console.log('Got:', a);
+    const b = yield 2;
+    console.log('Got:', b);
+}
+
+const gen1 = demo();
+console.log(gen1.next().value);      // Prints "Start", returns 1
+console.log(gen1.next('hello').value); // Prints "Got: hello", returns 2
+console.log(gen1.next('world').value); // Prints "Got: world", returns undefined
