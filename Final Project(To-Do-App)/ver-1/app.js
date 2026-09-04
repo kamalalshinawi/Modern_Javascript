@@ -2,6 +2,7 @@
 
 const API_URL = "https://jsonplaceholder.typicode.com/todos";
 
+let todoState = [];
 // fetch data
 const fetchTodos = async () => {
   try {
