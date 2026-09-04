@@ -47,3 +47,15 @@ const gen1 = demo();
 console.log(gen1.next().value);      // Prints "Start", returns 1
 console.log(gen1.next('hello').value); // Prints "Got: hello", returns 2
 console.log(gen1.next('world').value); // Prints "Got: world", returns undefined
+
+
+
+function* largeRange(max) {
+    for (let i = 0; i < max; i++) {
+        yield i;
+    }
+}
+
+const largeGen = largeRange(100);
+console.log(largeGen.next().value); // 0
+console.log(largeGen.next().value);
