@@ -131,37 +131,34 @@ const toggleTodoStatus = async (todo) => {
 };
 
 const deleteTodo = async (todo) => {
-    try {
-        const response = await fetch(`${API_URL}/${todo.id}`, {
-            method: 'DELETE'
-        });
+  try {
+    const response = await fetch(`${API_URL}/${todo.id}`, {
+      method: "DELETE",
+    });
 
-        if (!response.ok) throw new Error('Failed to delete todo');
+    if (!response.ok) throw new Error("Failed to delete todo");
 
-        // Update local state
-        todoState = todoState.filter(t => t.id !== todo.id);
-        // Update UI
-        const todoElement = document.getElementById(`todo-${todo.id}`);
-        todoElement.remove();
+    // Update local state
+    todoState = todoState.filter((t) => t.id !== todo.id);
+    // Update UI
+    const todoElement = document.getElementById(`todo-${todo.id}`);
+    todoElement.remove();
 
-        // Show "no todos" message if all are deleted
-        if (todoState.length === 0) {
-            document.getElementById('todoList').innerHTML = '<p>No todos found.</p>';
-        }
-
-    } catch (error) {
-        console.error('Error deleting todo:', error);
-        alert('Failed to delete todo. Please try again.');
+    // Show "no todos" message if all are deleted
+    if (todoState.length === 0) {
+      document.getElementById("todoList").innerHTML = "<p>No todos found.</p>";
     }
-}
-
-
-
-
+  } catch (error) {
+    console.error("Error deleting todo:", error);
+    alert("Failed to delete todo. Please try again.");
+  }
+};
 
 const initializeApp = async () => {
-  const todos = await fetchTodos();
-  renderTodoList(todos);
+  document
+    .getElementById("todoList")
+    .addEventListener("click", handleTodoAction);
+  fetchTodos().then(renderTodoList);
 };
 
 document.addEventListener("DOMContentLoaded", initializeApp);
