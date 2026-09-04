@@ -1,32 +1,55 @@
-const exploreTodoData = async () => {
+//  prepare Api
+
+const API_URL = "https://jsonplaceholder.typicode.com/todos";
+
+// fetch data
+const fetchTodos = async () => {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const response = await fetch(API_URL);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status ${response.status}`);
+    }
+
     const todos = await response.json();
-
-    console.log("all to do", todos);
-    console.log("type to do", typeof todos);
-
-    console.log(Object.keys(todos[0]));
-    const lengthTodosComplicated = todos.filter(
-      (todo) => todo.completed,
-    ).length;
-    console.log(lengthTodosComplicated);
-
-    displaySimpleTodoList(todos.slice(0, 20));
+    return todos.slice(0, 10);
   } catch (error) {
-    throw new Error("Failed to fetch Data");
+    throw new Error("Failed to fetch Todos");
   }
 };
 
-const displaySimpleTodoList = (todos) => {
-  const root = document.getElementById("root");
-  root.innerHTML = "<h2>First 10 Todos: </h2>";
+const createTodoElement = (todo) => {
+  const todoElement = document.createElement("div");
+  todoElement.className = `todo-item ${todo.completed ? "completed" : ""}`;
+  todoElement.id = `todo-${todo.id}`;
+
+  todoElement.innerHTML = `
+        <span class="todo-text">${todo.title}</span>
+        <span class="todo-status">${todo.completed ? "✓" : "○"}</span>
+
+    `;
+  console.log(todo.title);
+  return todoElement;
+};
+
+const renderTodoList = (todos) => {
+  const todoList = document.getElementById("todoList");
+
+  todoList.innerHTML = "";
+
+  if (todos.length === 0) {
+    todoList.innerHTML = "<p>No todos found.</p>";
+  }
 
   todos.forEach((todo) => {
-    const todoElement = document.createElement("div");
-    todoElement.textContent = `${todo.title}   (${todo.completed ? "Completed" : "Pending"})`;
-    root.appendChild(todoElement);
+    const todoElement = createTodoElement(todo);
+    todoList.appendChild(todoElement);
   });
 };
 
-exploreTodoData();
+const initializeApp = async () => {
+  const todos = await fetchTodos();
+  renderTodoList(todos);
+};
+
+document.addEventListener("DOMContentLoaded", initializeApp);
