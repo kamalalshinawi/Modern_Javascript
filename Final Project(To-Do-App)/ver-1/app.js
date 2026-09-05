@@ -161,4 +161,7 @@ const initializeApp = async () => {
   fetchTodos().then(renderTodoList);
 };
 
+document.getElementById("submit-btn").addEventListener("click", (event) => {
+  event.preventDefault();
+});
 document.addEventListener("DOMContentLoaded", initializeApp);
