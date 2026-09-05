@@ -222,6 +222,8 @@ const createTodo = async (todoText) => {
 };
 
 const initializeApp = async () => {
+  initializeForm();
+
   document
     .getElementById("todoList")
     .addEventListener("click", handleTodoAction);
