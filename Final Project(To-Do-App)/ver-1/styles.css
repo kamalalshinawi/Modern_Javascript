@@ -1,15 +1,65 @@
-.container{
-    max-width: 800px;
-    margin: 0 auto ; 
-    padding:200px;
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 200px;
 }
-.todo-item{
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin:5px 0;
-    border-radius: 4px;
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.todo-item.completed{
-    background-color: #e8fffe;
+.todo-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-toggle {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.completed .todo-text {
+  text-decoration: line-through;
+  color: #666;
+}
+/* Add to existing CSS */
+.todo-form {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.todo-form input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.todo-form button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.todo-form button:hover {
+  background-color: #45a049;
 }
