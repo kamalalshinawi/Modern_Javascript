@@ -154,15 +154,7 @@ const deleteTodo = async (todo) => {
   }
 };
 
-let nwTodo;
-document.getElementById("input-task").addEventListener("input", (event) => {
-  nwTodo = event.target.value;
-});
 
-const printTask = (event) => {
-  event.preventDefault();
-  console.log(nwTodo);
-};
 
 const initializeApp = async () => {
   document
@@ -171,6 +163,5 @@ const initializeApp = async () => {
   fetchTodos().then(renderTodoList);
 };
 
-document.getElementById("main-form").addEventListener("submit", printTask);
 
 document.addEventListener("DOMContentLoaded", initializeApp);
