@@ -154,6 +154,16 @@ const deleteTodo = async (todo) => {
   }
 };
 
+let nwTodo;
+document.getElementById("input-task").addEventListener("input", (event) => {
+  nwTodo = event.target.value;
+});
+
+const printTask = (event) => {
+  event.preventDefault();
+  console.log(nwTodo);
+};
+
 const initializeApp = async () => {
   document
     .getElementById("todoList")
@@ -161,7 +171,6 @@ const initializeApp = async () => {
   fetchTodos().then(renderTodoList);
 };
 
-document.getElementById("submit-btn").addEventListener("click", (event) => {
-  event.preventDefault();
-});
+document.getElementById("main-form").addEventListener("submit", printTask);
+
 document.addEventListener("DOMContentLoaded", initializeApp);
