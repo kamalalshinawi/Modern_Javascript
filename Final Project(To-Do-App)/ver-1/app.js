@@ -154,7 +154,72 @@ const deleteTodo = async (todo) => {
   }
 };
 
+const initializeForm = () => {
+  const form = document.getElementById("todoForm");
+  const input = document.getElementById("todoInput");
 
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault(); // Prevent form submission
+
+    const todoText = input.value.trim();
+
+    if (todoText.length < 3) {
+      alert("Todo must be at least 3 characters long");
+      return;
+    }
+
+    // Create new todo
+    await createTodo(todoText);
+
+    // Clear input
+    input.value = "";
+  });
+};
+
+const createTodo = async (todoText) => {
+  try {
+    // Prepare the new todo data
+    const newTodo = {
+      title: todoText,
+      completed: false,
+      userId: 1, // Required by JSONPlaceholder
+    };
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTodo),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create todo");
+    }
+
+    const createdTodo = await response.json();
+
+    // Since we're using JSONPlaceholder, it doesn't actually
+    // create a new todo. In a real app, we'd use the server's
+    // response(Which would be the created todo itself).
+    // Here, we'll simulate a new todo:
+    const simulatedTodo = {
+      ...createdTodo,
+      id: Date.now(), // Generate a unique ID
+    };
+
+    // Add to our state
+    todoState.unshift(simulatedTodo); // Add to beginning of array
+
+    // Create new element and add to DOM
+    const todoElement = createTodoElement(simulatedTodo);
+    const todoList = document.getElementById("todoList");
+    todoList.insertBefore(todoElement, todoList.firstChild);
+  } catch (error) {
+    console.error("Error creating todo:", error);
+    alert("Failed to create todo. Please try again.");
+  }
+};
 
 const initializeApp = async () => {
   document
@@ -162,6 +227,5 @@ const initializeApp = async () => {
     .addEventListener("click", handleTodoAction);
   fetchTodos().then(renderTodoList);
 };
-
 
 document.addEventListener("DOMContentLoaded", initializeApp);
