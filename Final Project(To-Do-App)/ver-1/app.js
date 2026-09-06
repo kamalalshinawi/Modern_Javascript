@@ -221,6 +221,26 @@ const createTodo = async (todoText) => {
   }
 };
 
+const showLoading = () => {
+    document.getElementById('loadingMessage').style.display = 'block';
+    document.getElementById('errorMessage').style.display = 'none';
+}
+
+const hideLoading =  () => {
+    document.getElementById('loadingMessage').style.display = 'none';
+}
+
+const showError = (message) => {
+    const errorElement = document.getElementById('errorMessage');
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+    setTimeout(() => {
+        errorElement.style.display = 'none';
+    }, 3000);  // Hide error after 3 seconds
+}
+
+
+
 const initializeApp = async () => {
   initializeForm();
 
