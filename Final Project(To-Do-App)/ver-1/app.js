@@ -134,28 +134,34 @@ const toggleTodoStatus = async (todo) => {
   // todo = { id: 1, title: "Buy milk", completed: true }
 };
 
-const deleteTodo = async (todo) => {
-  try {
-    const response = await fetch(`${API_URL}/${todo.id}`, {
-      method: "DELETE",
-    });
-
-    if (!response.ok) throw new Error("Failed to delete todo");
-
-    // Update local state
-    todoState = todoState.filter((t) => t.id !== todo.id);
-    // Update UI
+const deleteTodo = async (todo) => 
+  {
     const todoElement = document.getElementById(`todo-${todo.id}`);
-    todoElement.remove();
+    todoElement.classList.add('deleting');
 
-    // Show "no todos" message if all are deleted
-    if (todoState.length === 0) {
-      document.getElementById("todoList").innerHTML = "<p>No todos found.</p>";
+    try {
+        const response = await fetch(`${API_URL}/${todo.id}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) throw new Error('Failed to delete todo');
+
+        todoState = todoState.filter(t => t.id !== todo.id);
+
+        // Fade out and remove
+        todoElement.style.opacity = '0';
+        setTimeout(() => {
+            todoElement.remove();
+            if (todoState.length === 0) {
+                document.getElementById('todoList').innerHTML =
+                    '<p>No todos found.</p>';
+            }
+        }, 300);
+
+    } catch (error) {
+        showError('Failed to delete todo. Please try again.');
+        todoElement.classList.remove('deleting');
     }
-  } catch (error) {
-    console.error("Error deleting todo:", error);
-    alert("Failed to delete todo. Please try again.");
-  }
 };
 
 const initializeForm = () => {
