@@ -29,6 +29,12 @@ Understanding the DOM & DOM Manipulation/16_DOM_Selecting/index.html
 
 No package installation or build step is required.
 
+## Certification
+
+Modern JavaScript learning-path certificate issued by Manara on January 30, 2026.
+
+![Modern JavaScript certificate](assets/certification.png)
+
 ## Course
 
 The exercises follow the [Modern JavaScript course on Manara](https://app.manara.tech/learning/33/landing-page?source=Classroom).
