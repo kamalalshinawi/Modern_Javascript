@@ -103,39 +103,33 @@ const handleTodoAction = (event) => {
 };
 
 const toggleTodoStatus = async (todo) => {
-  try {
-    // In a real app, we'd wait for the server response
-    // For JSONPlaceholder, we'll simulate the update
-    // Send request to update todo on server
-    const response = await fetch(`${API_URL}/${todo.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        completed: !todo.completed, // Toggle the status
-      }),
-    });
+  const todoElement = document.getElementById(`todo-${todo.id}`);
+    const toggleButton = todoElement.querySelector('.btn-toggle');
+    toggleButton.disabled = true;
 
-    if (!response.ok) throw new Error("Failed to update todo");
+    try {
+        const response = await fetch(`${API_URL}/${todo.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                completed: !todo.completed
+            })
+        });
 
-    // Update local state(data)
-    todo.completed = !todo.completed; // Change from true to false or vice versa
-    // Update the UI to show the new status
-    updateTodoElement(todo);
-  } catch (error) {
-    console.error("Error updating todo:", error);
-    alert("Failed to update todo. Please try again.");
-  }
-  // Example:
-  // Before clicking "Complete":
-  // todo = { id: 1, title: "Buy milk", completed: false }
-  // After clicking "Complete":
-  // todo = { id: 1, title: "Buy milk", completed: true }
+        if (!response.ok) throw new Error('Failed to update todo');
+
+        todo.completed = !todo.completed;
+        updateTodoElement(todo);
+
+    } catch (error) {
+        showError('Failed to update todo. Please try again.');
+        toggleButton.disabled = false;
+    }
 };
 
-const deleteTodo = async (todo) => 
-  {
+const deleteTodo = async (todo) =>  {
     const todoElement = document.getElementById(`todo-${todo.id}`);
     todoElement.classList.add('deleting');
 
