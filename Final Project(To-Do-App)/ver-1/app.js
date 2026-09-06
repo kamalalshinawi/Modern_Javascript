@@ -6,22 +6,22 @@ let todoState = [];
 // fetch data
 const fetchTodos = async () => {
   showLoading();
-    try {
-        const response = await fetch(API_URL);
+  try {
+    const response = await fetch(API_URL);
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const todos = await response.json();
-        todoState = todos.slice(0, 10);
-        return todoState;
-    } catch (error) {
-        showError('Failed to load todos. Please refresh the page.');
-        return [];
-    } finally {
-        hideLoading();
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const todos = await response.json();
+    todoState = todos.slice(0, 10);
+    return todoState;
+  } catch (error) {
+    showError("Failed to load todos. Please refresh the page.");
+    return [];
+  } finally {
+    hideLoading();
+  }
 };
 
 const createTodoElement = (todo) => {
@@ -104,58 +104,56 @@ const handleTodoAction = (event) => {
 
 const toggleTodoStatus = async (todo) => {
   const todoElement = document.getElementById(`todo-${todo.id}`);
-    const toggleButton = todoElement.querySelector('.btn-toggle');
-    toggleButton.disabled = true;
+  const toggleButton = todoElement.querySelector(".btn-toggle");
+  toggleButton.disabled = true;
 
-    try {
-        const response = await fetch(`${API_URL}/${todo.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                completed: !todo.completed
-            })
-        });
+  try {
+    const response = await fetch(`${API_URL}/${todo.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        completed: !todo.completed,
+      }),
+    });
 
-        if (!response.ok) throw new Error('Failed to update todo');
+    if (!response.ok) throw new Error("Failed to update todo");
 
-        todo.completed = !todo.completed;
-        updateTodoElement(todo);
-
-    } catch (error) {
-        showError('Failed to update todo. Please try again.');
-        toggleButton.disabled = false;
-    }
+    todo.completed = !todo.completed;
+    updateTodoElement(todo);
+  } catch (error) {
+    showError("Failed to update todo. Please try again.");
+    toggleButton.disabled = false;
+  }
 };
 
-const deleteTodo = async (todo) =>  {
-    const todoElement = document.getElementById(`todo-${todo.id}`);
-    todoElement.classList.add('deleting');
+const deleteTodo = async (todo) => {
+  const todoElement = document.getElementById(`todo-${todo.id}`);
+  todoElement.classList.add("deleting");
 
-    try {
-        const response = await fetch(`${API_URL}/${todo.id}`, {
-            method: 'DELETE'
-        });
+  try {
+    const response = await fetch(`${API_URL}/${todo.id}`, {
+      method: "DELETE",
+    });
 
-        if (!response.ok) throw new Error('Failed to delete todo');
+    if (!response.ok) throw new Error("Failed to delete todo");
 
-        todoState = todoState.filter(t => t.id !== todo.id);
+    todoState = todoState.filter((t) => t.id !== todo.id);
 
-        // Fade out and remove
-        todoElement.style.opacity = '0';
-        setTimeout(() => {
-            todoElement.remove();
-            if (todoState.length === 0) {
-                document.getElementById('todoList').innerHTML =
-                    '<p>No todos found.</p>';
-            }
-        }, 300);
-
-    } catch (error) {
-        showError('Failed to delete todo. Please try again.');
-        todoElement.classList.remove('deleting');
-    }
+    // Fade out and remove
+    todoElement.style.opacity = "0";
+    setTimeout(() => {
+      todoElement.remove();
+      if (todoState.length === 0) {
+        document.getElementById("todoList").innerHTML =
+          "<p>No todos found.</p>";
+      }
+    }, 300);
+  } catch (error) {
+    showError("Failed to delete todo. Please try again.");
+    todoElement.classList.remove("deleting");
+  }
 };
 
 const initializeForm = () => {
@@ -181,74 +179,71 @@ const initializeForm = () => {
 };
 
 const createTodo = async (todoText) => {
-  const submitButton = document.getElementById('submitButton');
-    submitButton.disabled = true;
-    submitButton.classList.add('loading');
+  const submitButton = document.getElementById("submitButton");
+  submitButton.disabled = true;
+  submitButton.classList.add("loading");
 
-    try {
-        const newTodo = {
-            title: todoText,
-            completed: false,
-            userId: 1
-        };
+  try {
+    const newTodo = {
+      title: todoText,
+      completed: false,
+      userId: 1,
+    };
 
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newTodo)
-        });
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTodo),
+    });
 
-        if (!response.ok) {
-            throw new Error('Failed to create todo');
-        }
-
-        const createdTodo = await response.json();
-        const simulatedTodo = {
-            ...createdTodo,
-            id: Date.now(),
-        };
-
-        todoState.unshift(simulatedTodo);
-
-        const todoElement = createTodoElement(simulatedTodo);
-        const todoList = document.getElementById('todoList');
-
-        // Add with animation
-        todoElement.style.opacity = '0';
-        todoList.insertBefore(todoElement, todoList.firstChild);
-        requestAnimationFrame(() => {
-            todoElement.style.opacity = '1';
-        });
-
-    } catch (error) {
-        showError('Failed to create todo. Please try again.');
-    } finally {
-        submitButton.disabled = false;
-        submitButton.classList.remove('loading');
+    if (!response.ok) {
+      throw new Error("Failed to create todo");
     }
+
+    const createdTodo = await response.json();
+    const simulatedTodo = {
+      ...createdTodo,
+      id: Date.now(),
+    };
+
+    todoState.unshift(simulatedTodo);
+
+    const todoElement = createTodoElement(simulatedTodo);
+    const todoList = document.getElementById("todoList");
+
+    // Add with animation
+    todoElement.style.opacity = "0";
+    todoList.insertBefore(todoElement, todoList.firstChild);
+    requestAnimationFrame(() => {
+      todoElement.style.opacity = "1";
+    });
+  } catch (error) {
+    showError("Failed to create todo. Please try again.");
+  } finally {
+    submitButton.disabled = false;
+    submitButton.classList.remove("loading");
+  }
 };
 
 const showLoading = () => {
-    document.getElementById('loadingMessage').style.display = 'block';
-    document.getElementById('errorMessage').style.display = 'none';
-}
+  document.getElementById("loadingMessage").style.display = "block";
+  document.getElementById("errorMessage").style.display = "none";
+};
 
-const hideLoading =  () => {
-    document.getElementById('loadingMessage').style.display = 'none';
-}
+const hideLoading = () => {
+  document.getElementById("loadingMessage").style.display = "none";
+};
 
 const showError = (message) => {
-    const errorElement = document.getElementById('errorMessage');
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-    setTimeout(() => {
-        errorElement.style.display = 'none';
-    }, 3000);  // Hide error after 3 seconds
-}
-
-
+  const errorElement = document.getElementById("errorMessage");
+  errorElement.textContent = message;
+  errorElement.style.display = "block";
+  setTimeout(() => {
+    errorElement.style.display = "none";
+  }, 3000); // Hide error after 3 seconds
+};
 
 const initializeApp = async () => {
   initializeForm();
