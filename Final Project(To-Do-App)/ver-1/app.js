@@ -181,48 +181,53 @@ const initializeForm = () => {
 };
 
 const createTodo = async (todoText) => {
-  try {
-    // Prepare the new todo data
-    const newTodo = {
-      title: todoText,
-      completed: false,
-      userId: 1, // Required by JSONPlaceholder
-    };
+  const submitButton = document.getElementById('submitButton');
+    submitButton.disabled = true;
+    submitButton.classList.add('loading');
 
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTodo),
-    });
+    try {
+        const newTodo = {
+            title: todoText,
+            completed: false,
+            userId: 1
+        };
 
-    if (!response.ok) {
-      throw new Error("Failed to create todo");
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newTodo)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create todo');
+        }
+
+        const createdTodo = await response.json();
+        const simulatedTodo = {
+            ...createdTodo,
+            id: Date.now(),
+        };
+
+        todoState.unshift(simulatedTodo);
+
+        const todoElement = createTodoElement(simulatedTodo);
+        const todoList = document.getElementById('todoList');
+
+        // Add with animation
+        todoElement.style.opacity = '0';
+        todoList.insertBefore(todoElement, todoList.firstChild);
+        requestAnimationFrame(() => {
+            todoElement.style.opacity = '1';
+        });
+
+    } catch (error) {
+        showError('Failed to create todo. Please try again.');
+    } finally {
+        submitButton.disabled = false;
+        submitButton.classList.remove('loading');
     }
-
-    const createdTodo = await response.json();
-
-    // Since we're using JSONPlaceholder, it doesn't actually
-    // create a new todo. In a real app, we'd use the server's
-    // response(Which would be the created todo itself).
-    // Here, we'll simulate a new todo:
-    const simulatedTodo = {
-      ...createdTodo,
-      id: Date.now(), // Generate a unique ID
-    };
-
-    // Add to our state
-    todoState.unshift(simulatedTodo); // Add to beginning of array
-
-    // Create new element and add to DOM
-    const todoElement = createTodoElement(simulatedTodo);
-    const todoList = document.getElementById("todoList");
-    todoList.insertBefore(todoElement, todoList.firstChild);
-  } catch (error) {
-    console.error("Error creating todo:", error);
-    alert("Failed to create todo. Please try again.");
-  }
 };
 
 const showLoading = () => {
