@@ -5,19 +5,23 @@ const API_URL = "https://jsonplaceholder.typicode.com/todos";
 let todoState = [];
 // fetch data
 const fetchTodos = async () => {
-  try {
-    const response = await fetch(API_URL);
+  showLoading();
+    try {
+        const response = await fetch(API_URL);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const todos = await response.json();
+        todoState = todos.slice(0, 10);
+        return todoState;
+    } catch (error) {
+        showError('Failed to load todos. Please refresh the page.');
+        return [];
+    } finally {
+        hideLoading();
     }
-
-    const todos = await response.json();
-    todoState = todos.slice(0, 10);
-    return todoState;
-  } catch (error) {
-    throw new Error("Failed to fetch Todos");
-  }
 };
 
 const createTodoElement = (todo) => {
